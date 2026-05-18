@@ -856,6 +856,7 @@ let endEntity = null;
 let currentPathEntities = [];    
 let activeRouteRender = null;
 const currentGridLevel = ref(gridLevelForCameraHeight(INITIAL_VIEW.height));
+// 手动选择层级只覆盖当前视野；用户再次缩放或拖动地图后恢复按相机高度自动切换。
 const manualGridLevelLocked = ref(false);
 const levelMenuOpen = ref(false);
 const targetAltitude = ref(30);//目标设定高度，默认30m
@@ -1855,6 +1856,9 @@ function initCameraListener() {
       // 更新底部比例尺
       updateScale();
 
+      if (manualGridLevelLocked.value) {
+        manualGridLevelLocked.value = false;
+      }
       const requestLevel = syncGridLevelToCameraHeight(height);
       gridLevelStr.value = GRID_CONFIG[requestLevel]?.label || requestLevel;
 
