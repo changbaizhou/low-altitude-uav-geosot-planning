@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.vite/
+
+# local environment
+.env
+.env.*
+!.env.example
+
+# database dumps and local backups
+*.backup
+*.dump
+*.sql.gz
+database/*.backup
+
+# operating system / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# logs and temporary files
+*.log
+npm-debug.log*
+tmp/
+temp/
+

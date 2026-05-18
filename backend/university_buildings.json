@@ -1,0 +1,8 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    { "type": "Feature", "properties": { "name": "图书馆", "building:levels": 5 }, "geometry": { "type": "Polygon", "coordinates": [[[118.7885, 31.9135], [118.7900, 31.9135], [118.7900, 31.9145], [118.7885, 31.9145], [118.7885, 31.9135]]] } },
+    { "type": "Feature", "properties": { "name": "致高楼", "building:levels": 6 }, "geometry": { "type": "Polygon", "coordinates": [[[118.7850, 31.9150], [118.7865, 31.9150], [118.7865, 31.9160], [118.7850, 31.9160], [118.7850, 31.9150]]] } },
+    { "type": "Feature", "properties": { "name": "学生宿舍", "building:levels": 6 }, "geometry": { "type": "Polygon", "coordinates": [[[118.7820, 31.9110], [118.7840, 31.9110], [118.7840, 31.9125], [118.7820, 31.9125], [118.7820, 31.9110]]] } }
+  ]
+}

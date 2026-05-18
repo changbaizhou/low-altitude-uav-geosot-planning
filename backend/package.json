@@ -1,0 +1,24 @@
+{
+  "name": "low-altitude-uav-geosot-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "generate:grids": "node generate_grids.js",
+    "import:obstacles": "node import_obstacles.js",
+    "import:surface-weights": "node import_surface_weights.js",
+    "test": "node --check geosot.js && node --check generate_grids.js && node --check server.js && node --check import_obstacles.js && node --check import_surface_weights.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cesium": "^1.140.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "pg": "^8.20.0",
+    "vite-plugin-cesium": "^1.2.23"
+  }
+}
