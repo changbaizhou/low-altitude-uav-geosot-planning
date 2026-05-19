@@ -10,17 +10,16 @@ if [[ -f "$ROOT_DIR/.env" ]]; then
   set +a
 fi
 
-cd "$ROOT_DIR/backend"
-
 export PGHOST="${PGHOST:-localhost}"
 export PGPORT="${PGPORT:-5432}"
 export PGUSER="${PGUSER:-postgres}"
 export PGPASSWORD="${PGPASSWORD:-}"
 export PGDATABASE="${PGDATABASE:-uav-db}"
-export PORT="${PORT:-3000}"
+
+cd "$ROOT_DIR/backend"
 
 if [[ ! -d node_modules ]]; then
   npm install
 fi
 
-npm start
+npm run setup:database

@@ -5,10 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "setup:database": "node setup_database.js",
     "generate:grids": "node generate_grids.js",
     "import:obstacles": "node import_obstacles.js",
     "import:surface-weights": "node import_surface_weights.js",
-    "test": "node --check geosot.js && node --check generate_grids.js && node --check server.js && node --check import_obstacles.js && node --check import_surface_weights.js"
+    "test": "node --check dbConfig.js && node --check geosot.js && node --check setup_database.js && node --check generate_grids.js && node --check server.js && node --check import_obstacles.js && node --check import_surface_weights.js && node --check import_data.js && node --check repair_restored_schema.js"
   },
   "keywords": [],
   "author": "",

@@ -11,6 +11,8 @@ import vue from '@vitejs/plugin-vue';
 import cesium from 'vite-plugin-cesium';
 
 export default defineConfig({
+  // Keep frontend and backend environment variables in the repository-root .env file.
+  envDir: '..',
   plugins: [
     vue(),
     // 确保这里启用了 cesium 插件，它会自动处理静态资源路径

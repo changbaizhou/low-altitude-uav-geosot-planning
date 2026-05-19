@@ -7,15 +7,9 @@
  */
 
 const fs = require('fs');
-const { Pool } = require('pg');
+const { createPool } = require('./dbConfig');
 
-const pool = new Pool({
-    user: process.env.PGUSER || 'postgres',
-    host: process.env.PGHOST || 'localhost',
-    database: process.env.PGDATABASE || 'uav-db',
-    password: process.env.PGPASSWORD,
-    port: Number(process.env.PGPORT || 5432),
-});
+const pool = createPool();
 
 /**
  * 导入匿名化示例大学区域的建筑数据，并映射为基础空域约束。

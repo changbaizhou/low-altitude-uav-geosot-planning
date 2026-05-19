@@ -13,29 +13,31 @@ Recommended environment:
 In PowerShell:
 
 ```powershell
-$env:PGHOST="localhost"
-$env:PGPORT="5432"
-$env:PGUSER="postgres"
-$env:PGPASSWORD="your_postgresql_password"
-$env:PGDATABASE="uav-db"
-$env:VITE_API_BASE="http://localhost:3000"
+cd path\to\low-altitude-uav-geosot-planning
+Copy-Item .env.example .env
+notepad .env
 ```
 
-Optional:
+Edit `.env` and replace `PGPASSWORD=your_postgresql_password` with your local PostgreSQL password. Optional Cesium and weather keys can stay blank.
+
+## 2. Initialize Database
+
+Run this once before the first backend start:
 
 ```powershell
-$env:QWEATHER_API_KEY="your_qweather_key"
-$env:VITE_CESIUM_ION_TOKEN="your_cesium_ion_token"
+powershell -ExecutionPolicy Bypass -File .\setup_database.ps1
 ```
 
-## 2. Start Backend
+The script creates the configured database when possible, enables PostGIS extensions, generates GeoSOT grid tables, imports obstacle constraints and L22 surface weights, and applies the schema patch.
+
+## 3. Start Backend
 
 ```powershell
 cd path\to\low-altitude-uav-geosot-planning
 powershell -ExecutionPolicy Bypass -File .\start_backend.ps1
 ```
 
-## 3. Start Frontend
+## 4. Start Frontend
 
 Open another PowerShell terminal:
 
@@ -50,7 +52,7 @@ Open:
 http://127.0.0.1:5173/
 ```
 
-## 4. Database Restore
+## 5. Database Restore
 
 If you have a private PostgreSQL backup file:
 
@@ -59,4 +61,3 @@ powershell -ExecutionPolicy Bypass -File .\restore_database.ps1 .\database\your_
 ```
 
 Backup files are intentionally excluded from Git.
-

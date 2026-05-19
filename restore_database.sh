@@ -2,6 +2,14 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [[ -f "$ROOT_DIR/.env" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source "$ROOT_DIR/.env"
+  set +a
+fi
+
 BACKUP_FILE="${1:-"$ROOT_DIR/database/uav-db_current.backup"}"
 SCHEMA_PATCH_FILE="$ROOT_DIR/database/latest_schema_patch_20260518.sql"
 

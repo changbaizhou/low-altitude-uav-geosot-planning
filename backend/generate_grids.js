@@ -6,7 +6,7 @@
  * @description 空域网格生成脚本，用于构建不同层级的三维GeoSOT网格单元。
  */
 
-const { Pool } = require('pg');
+const { createPool } = require('./dbConfig');
 const {
     GRID_LEVEL_SPECS,
     dmsAlignedAxisCells,
@@ -16,13 +16,7 @@ const {
     estimateResolutionMeters,
 } = require('./geosot');
 
-const pool = new Pool({
-    user: process.env.PGUSER || 'postgres',
-    host: process.env.PGHOST || 'localhost',
-    database: process.env.PGDATABASE || 'uav-db',
-    password: process.env.PGPASSWORD,
-    port: Number(process.env.PGPORT || 5432),
-});
+const pool = createPool();
 
 const BATCH_SIZE = Number(process.env.GRID_BATCH_SIZE || 1000);
 const KEEP_EXISTING_GRIDS = process.env.KEEP_EXISTING_GRIDS === '1';

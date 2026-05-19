@@ -27,6 +27,7 @@
 ├── frontend                   # Vue + Vite + Cesium 前端界面
 ├── database                   # 数据库补丁与说明
 ├── docs                       # Windows 运行说明
+├── setup_database.*           # 首次数据库初始化脚本
 ├── start_backend.*            # 后端启动脚本
 ├── start_frontend.*           # 前端启动脚本
 ├── restore_database.*         # 可选的本地数据库恢复脚本
@@ -41,22 +42,37 @@
 - PostgreSQL 与 PostGIS
 - npm
 
-系统默认连接名为 `uav-db` 的 PostgreSQL 数据库。数据库连接信息通过环境变量配置，可以复制 `.env.example` 为 `.env`，也可以直接在终端中设置相关变量。
+系统默认连接名为 `uav-db` 的 PostgreSQL 数据库。数据库连接信息通过环境变量配置。首次运行时，请先复制 `.env.example` 为 `.env`，修改 PostgreSQL 密码，然后执行数据库初始化命令。
+
+## 首次初始化
+
+```bash
+cp .env.example .env
+# 修改 .env，将 PGPASSWORD=your_postgresql_password 替换为本机 PostgreSQL 密码。
+```
+
+初始化数据库并导入公开演示数据：
+
+```bash
+cd backend
+npm install
+npm run setup:database
+```
+
+初始化命令会在权限允许时自动创建数据库，启用 PostGIS 扩展，生成 GeoSOT 网格表，导入障碍物约束和 L22 地表权重，并应用最新数据库补丁。
 
 ## 启动后端
 
 ```bash
 cd backend
 npm install
-
-export PGHOST=localhost
-export PGPORT=5432
-export PGUSER=postgres
-export PGPASSWORD=your_postgresql_password
-export PGDATABASE=uav-db
-export QWEATHER_API_KEY=
-
 npm start
+```
+
+也可以在仓库根目录直接使用启动脚本：
+
+```bash
+./start_backend.sh
 ```
 
 后端默认地址：
@@ -85,13 +101,13 @@ npm run dev -- --host 127.0.0.1 --port 5173
 http://127.0.0.1:5173/
 ```
 
-如果后端不是运行在 `localhost:3000`，请在启动前端前设置 `VITE_API_BASE`。
+如果后端不是运行在 `localhost:3000`，请在启动前端前在 `.env` 中设置 `VITE_API_BASE`。
 
 ## 数据库说明
 
 本仓库默认不包含完整数据库备份文件。完整 `.backup` 文件通常包含较大的本地运行数据，仓库公开时不建议提交。
 
-`database/latest_schema_patch_20260518.sql` 包含路径归档、路径占用、停机坪、临时管控区域以及状态查询索引等最新运行结构。若需要初始化完整数据库，请结合 `database/README.md` 中的说明运行后端初始化脚本和网格生成脚本。
+`database/latest_schema_patch_20260518.sql` 包含路径归档、路径占用、停机坪、临时管控区域以及状态查询索引等最新运行结构。它是针对已有网格数据库的补丁，不是完整初始化脚本。若需要初始化完整数据库，请执行 `cd backend && npm run setup:database`。
 
 ## 安全说明
 

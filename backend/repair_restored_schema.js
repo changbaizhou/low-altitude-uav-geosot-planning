@@ -6,16 +6,10 @@
  * @description 数据库恢复后的表结构兼容与状态字段修复脚本。
  */
 
-const { Pool } = require('pg');
+const { createPool } = require('./dbConfig');
 const { GRID_LEVEL_SPECS, cellFromLonLat, altitudeToLayer } = require('./geosot');
 
-const pool = new Pool({
-    user: process.env.PGUSER || 'postgres',
-    host: process.env.PGHOST || 'localhost',
-    database: process.env.PGDATABASE || 'uav-db',
-    password: process.env.PGPASSWORD,
-    port: Number(process.env.PGPORT || 5432),
-});
+const pool = createPool();
 
 const BATCH_SIZE = Number(process.env.REPAIR_BATCH_SIZE || 2000);
 

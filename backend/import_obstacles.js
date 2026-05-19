@@ -8,15 +8,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const { Pool } = require('pg');
+const { createPool } = require('./dbConfig');
 
-const pool = new Pool({
-    user: process.env.PGUSER || 'postgres',
-    host: process.env.PGHOST || 'localhost',
-    database: process.env.PGDATABASE || 'uav-db',
-    password: process.env.PGPASSWORD,
-    port: Number(process.env.PGPORT || 5432),
-});
+const pool = createPool();
 
 const BUILDING_FILE = process.env.BUILDING_GEOJSON || path.join(__dirname, 'buildings.geojson');
 const VERTICAL_CLEARANCE_M = Number(process.env.VERTICAL_CLEARANCE_M || 10);

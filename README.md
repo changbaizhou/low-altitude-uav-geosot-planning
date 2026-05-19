@@ -27,6 +27,7 @@ The project was developed for research on converting continuous low-altitude air
 ├── frontend        # Vue + Vite + Cesium frontend
 ├── database                   # Schema patch and database notes
 ├── docs                       # Windows-oriented running notes
+├── setup_database.*           # First-time database initialization scripts
 ├── start_backend.*            # Helper scripts
 ├── start_frontend.*           # Helper scripts
 ├── restore_database.*         # Optional restore scripts for local backups
@@ -41,22 +42,37 @@ The project was developed for research on converting continuous low-altitude air
 - PostgreSQL with PostGIS
 - npm
 
-The system expects a PostgreSQL database named `uav-db` by default. Connection settings are controlled by environment variables. Copy `.env.example` to `.env` or set the variables in your terminal.
+The system expects a PostgreSQL database named `uav-db` by default. Connection settings are controlled by environment variables. Copy `.env.example` to `.env`, edit the PostgreSQL password, and then run the database setup command before starting the backend.
+
+## First-Time Setup
+
+```bash
+cp .env.example .env
+# Edit .env and replace PGPASSWORD=your_postgresql_password with your local PostgreSQL password.
+```
+
+Initialize the database and import the public demo data:
+
+```bash
+cd backend
+npm install
+npm run setup:database
+```
+
+The setup command will create the configured database when possible, enable PostGIS extensions, generate GeoSOT grid tables, import obstacle constraints, import L22 surface weights, and apply the latest schema patch.
 
 ## Run Backend
 
 ```bash
 cd backend
 npm install
-
-export PGHOST=localhost
-export PGPORT=5432
-export PGUSER=postgres
-export PGPASSWORD=your_postgresql_password
-export PGDATABASE=uav-db
-export QWEATHER_API_KEY=
-
 npm start
+```
+
+You can also use the helper script from the repository root:
+
+```bash
+./start_backend.sh
 ```
 
 Backend default URL:
@@ -85,13 +101,13 @@ Frontend URL:
 http://127.0.0.1:5173/
 ```
 
-If the backend is not running on `localhost:3000`, set `VITE_API_BASE` before starting the frontend.
+If the backend is not running on `localhost:3000`, set `VITE_API_BASE` in `.env` before starting the frontend.
 
 ## Database Notes
 
 This repository does not include full database backup files by default. Full `.backup` files may contain large local runtime data and should not be committed when the repository is made public.
 
-The `database/latest_schema_patch_20260518.sql` file contains the latest runtime schema additions for route archives, route occupancy, helipads, temporary control areas and several state/query indexes. For a complete fresh database, run the backend initialization scripts and grid generation scripts described in `database/README.md`.
+The `database/latest_schema_patch_20260518.sql` file contains the latest runtime schema additions for route archives, route occupancy, helipads, temporary control areas and several state/query indexes. It is a patch for an existing grid database, not a complete fresh initialization script. For a complete fresh database, run `cd backend && npm run setup:database`.
 
 ## Security Notes
 

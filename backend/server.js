@@ -10,7 +10,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const { Pool } = require('pg');
+const { createPool } = require('./dbConfig');
 const {
     normalizeLevelKey,
     getLevelSpec,
@@ -29,14 +29,8 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '5mb' }));
 
-// 数据库连接允许通过环境变量覆盖，方便在不同电脑或 Windows 环境中部署。
-const pool = new Pool({
-    user: process.env.PGUSER || 'postgres',
-    host: process.env.PGHOST || 'localhost',
-    database: process.env.PGDATABASE || 'uav-db',
-    password: process.env.PGPASSWORD,
-    port: Number(process.env.PGPORT || 5432),
-});
+// 数据库连接由 dbConfig 统一读取 .env / 环境变量，避免不同脚本配置不一致。
+const pool = createPool();
 
 const UAV_PROFILE = {
     cruiseSpeedMps: 18,
@@ -438,6 +432,24 @@ async function ensureSpatiotemporalIndexSchema() {
     await pool.query('CREATE INDEX IF NOT EXISTS airspace_grid_history_spacetime_idx ON airspace_grid_state_history (geosot_id, created_at DESC, status, weather_limit);');
     await pool.query('CREATE INDEX IF NOT EXISTS airspace_grid_weather_scope_idx ON airspace_grid (grid_level, weather_limit, weather_risk_level);');
     await pool.query('CREATE INDEX IF NOT EXISTS airspace_grid_surface_idx ON airspace_grid (grid_level, surface_type, surface_weight);');
+}
+
+/**
+ * 启动服务前确认基础网格表已经生成，避免新环境直接启动时报晦涩的数据库错误。
+ */
+async function ensureBaseGridSchemaReady() {
+    const result = await pool.query(`
+        SELECT
+            to_regclass('public.airspace_grid') AS grid_table,
+            to_regclass('public.airspace_grid_state_history') AS history_table;
+    `);
+    const row = result.rows[0] || {};
+
+    if (!row.grid_table || !row.history_table) {
+        throw new Error(
+            'Database is not initialized. Run "cd backend && npm install && npm run setup:database" first.',
+        );
+    }
 }
 
 /**
@@ -4268,6 +4280,7 @@ app.get('/plan', async (req, res) => {
  * 封装start server相关逻辑，保持调用处简洁并便于后续维护。
  */
 async function startServer() {
+    await ensureBaseGridSchemaReady();
     await ensureSpatiotemporalIndexSchema();
     await ensureRouteArchiveSchema();
     await ensureHelipadSchema();
