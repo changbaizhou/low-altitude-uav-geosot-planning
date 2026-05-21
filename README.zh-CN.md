@@ -25,25 +25,25 @@
 
 ### 系统总览
 
-<img src="./docs/images/overview.png" alt="系统总览" width="100%">
+<img src="./docs/images/overview.jpg" alt="系统总览" width="100%">
 
 ### 核心功能展示
 
 | 三维场景与基础图层 | 多层级 GeoSOT 网格 |
 | --- | --- |
-| <img src="./docs/images/model-scene.png" alt="三维场景与基础图层" width="100%"> | <img src="./docs/images/geosot-l15-grid.png" alt="多层级 GeoSOT 网格" width="100%"> |
+| <img src="./docs/images/model-scene.jpg" alt="三维场景与基础图层" width="100%"> | <img src="./docs/images/geosot-l15-grid.jpg" alt="多层级 GeoSOT 网格" width="100%"> |
 
 | L22 地表权重层 | 停机坪管理 |
 | --- | --- |
-| <img src="./docs/images/l22-surface-weights.png" alt="L22 地表权重层" width="100%"> | <img src="./docs/images/helipads.png" alt="停机坪管理" width="100%"> |
+| <img src="./docs/images/l22-surface-weights.jpg" alt="L22 地表权重层" width="100%"> | <img src="./docs/images/helipads.jpg" alt="停机坪管理" width="100%"> |
 
 | 无管控区路径规划 | 状态约束下的绕行规划 |
 | --- | --- |
-| <img src="./docs/images/route-planning.png" alt="无管控区路径规划" width="100%"> | <img src="./docs/images/controlled-route-reroute.png" alt="状态约束下的绕行规划" width="100%"> |
+| <img src="./docs/images/route-planning.jpg" alt="无管控区路径规划" width="100%"> | <img src="./docs/images/controlled-route-reroute.jpg" alt="状态约束下的绕行规划" width="100%"> |
 
 | 临时管控区域 | 跨尺度三维格网显示 |
 | --- | --- |
-| <img src="./docs/images/temporary-control.png" alt="临时管控区域" width="100%"> | <img src="./docs/images/cross-scale-flight.png" alt="跨尺度三维格网显示" width="100%"> |
+| <img src="./docs/images/temporary-control.jpg" alt="临时管控区域" width="100%"> | <img src="./docs/images/cross-scale-flight.jpg" alt="跨尺度三维格网显示" width="100%"> |
 
 ## 项目结构
 
