@@ -19,6 +19,32 @@
 - 路径占用时间戳，支撑后续多无人机冲突检查
 - 基于 Cesium 的三维可视化界面
 
+## 页面截图
+
+以下截图只选取系统的部分典型界面，用于展示原型系统的主要能力。
+
+### 系统总览
+
+<img src="./docs/images/overview.png" alt="系统总览" width="100%">
+
+### 核心功能展示
+
+| 三维场景与基础图层 | 多层级 GeoSOT 网格 |
+| --- | --- |
+| <img src="./docs/images/model-scene.png" alt="三维场景与基础图层" width="100%"> | <img src="./docs/images/geosot-l15-grid.png" alt="多层级 GeoSOT 网格" width="100%"> |
+
+| L22 地表权重层 | 停机坪管理 |
+| --- | --- |
+| <img src="./docs/images/l22-surface-weights.png" alt="L22 地表权重层" width="100%"> | <img src="./docs/images/helipads.png" alt="停机坪管理" width="100%"> |
+
+| 无管控区路径规划 | 状态约束下的绕行规划 |
+| --- | --- |
+| <img src="./docs/images/route-planning.png" alt="无管控区路径规划" width="100%"> | <img src="./docs/images/controlled-route-reroute.png" alt="状态约束下的绕行规划" width="100%"> |
+
+| 临时管控区域 | 跨尺度三维格网显示 |
+| --- | --- |
+| <img src="./docs/images/temporary-control.png" alt="临时管控区域" width="100%"> | <img src="./docs/images/cross-scale-flight.png" alt="跨尺度三维格网显示" width="100%"> |
+
 ## 项目结构
 
 ```text
@@ -26,7 +52,7 @@
 ├── backend                    # Node.js / Express 后端接口与路径规划逻辑
 ├── frontend                   # Vue + Vite + Cesium 前端界面
 ├── database                   # 数据库补丁与说明
-├── docs                       # Windows 运行说明
+├── docs                       # Windows 运行说明与页面截图
 ├── setup_database.*           # 首次数据库初始化脚本
 ├── start_backend.*            # 后端启动脚本
 ├── start_frontend.*           # 前端启动脚本

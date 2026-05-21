@@ -19,6 +19,32 @@ The project was developed for research on converting continuous low-altitude air
 - Route occupancy timestamps for future multi-UAV conflict checking
 - Cesium-based 3D visualization interface
 
+## Screenshots
+
+The following screenshots show selected interface states of the prototype system.
+
+### System Overview
+
+<img src="./docs/images/overview.png" alt="System overview" width="100%">
+
+### Core Demonstrations
+
+| 3D scene and base layers | Multi-level GeoSOT grid |
+| --- | --- |
+| <img src="./docs/images/model-scene.png" alt="3D scene and base layers" width="100%"> | <img src="./docs/images/geosot-l15-grid.png" alt="Multi-level GeoSOT grid" width="100%"> |
+
+| L22 surface weight layer | Helipad management |
+| --- | --- |
+| <img src="./docs/images/l22-surface-weights.png" alt="L22 surface weight layer" width="100%"> | <img src="./docs/images/helipads.png" alt="Helipad management" width="100%"> |
+
+| Route planning without control area | State-constrained route rerouting |
+| --- | --- |
+| <img src="./docs/images/route-planning.png" alt="Route planning without control area" width="100%"> | <img src="./docs/images/controlled-route-reroute.png" alt="State-constrained route rerouting" width="100%"> |
+
+| Temporary control area | Cross-scale 3D grid display |
+| --- | --- |
+| <img src="./docs/images/temporary-control.png" alt="Temporary control area" width="100%"> | <img src="./docs/images/cross-scale-flight.png" alt="Cross-scale 3D grid display" width="100%"> |
+
 ## Project Structure
 
 ```text
@@ -26,7 +52,7 @@ The project was developed for research on converting continuous low-altitude air
 ├── backend          # Node.js / Express API and planning logic
 ├── frontend        # Vue + Vite + Cesium frontend
 ├── database                   # Schema patch and database notes
-├── docs                       # Windows-oriented running notes
+├── docs                       # Windows-oriented running notes and screenshots
 ├── setup_database.*           # First-time database initialization scripts
 ├── start_backend.*            # Helper scripts
 ├── start_frontend.*           # Helper scripts
