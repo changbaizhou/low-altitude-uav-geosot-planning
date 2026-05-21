@@ -6,6 +6,10 @@ This repository contains a prototype system for low-altitude UAV route planning 
 
 The project was developed for research on converting continuous low-altitude airspace into codable, queryable and state-aware three-dimensional grid units, and then using these units for route planning, temporary control, weather control, route archiving and spatiotemporal occupancy analysis.
 
+## Author Note
+
+This prototype was completed as part of my undergraduate graduation project. It is also my first GitHub project and the first web application I have publicly released. The system is still an early research prototype, with many limitations and many aspects that can be further improved. Feedback, suggestions and criticism are sincerely welcome.
+
 ## Features
 
 - Multi-level GeoSOT airspace grid display
