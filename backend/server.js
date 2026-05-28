@@ -58,7 +58,9 @@ const DISPLAY_GRID_LIMIT = 40000;
 const DEFAULT_DISPLAY_GRID_LIMIT = 8000;
 const DATABASE_DISPLAY_LEVELS = new Set(['L16', 'L19', 'L22']);
 const DATABASE_OBSTACLE_LEVELS = new Set(['L16', 'L19', 'L22']);
-const OCCUPANCY_ACTIVE_STATUSES = ['planned', 'active'];
+// Only real-time occupied airspace should block new planning. Archived route traces remain for replay/statistics.
+const OCCUPANCY_ACTIVE_STATUSES = ['active'];
+const OCCUPANCY_ARCHIVE_STATUS = 'archived';
 const OCCUPANCY_TIME_BUFFER_MS = Number(process.env.OCCUPANCY_TIME_BUFFER_MS || 500);
 const OCCUPANCY_ARCHIVE_BUFFER_SECONDS = Number(process.env.OCCUPANCY_ARCHIVE_BUFFER_SECONDS || 0.5);
 const OCCUPANCY_SAMPLE_INTERVAL_SECONDS = Number(process.env.OCCUPANCY_SAMPLE_INTERVAL_SECONDS || 0.5);
@@ -851,6 +853,12 @@ async function ensureRouteArchiveSchema() {
         ALTER TABLE planned_route_occupancy ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
     `);
     await pool.query(`
+        UPDATE planned_route_occupancy
+        SET status = $1
+        WHERE source = 'route_archive'
+          AND status <> $1;
+    `, [OCCUPANCY_ARCHIVE_STATUS]);
+    await pool.query(`
         DO $$
         BEGIN
             IF NOT EXISTS (
@@ -1368,13 +1376,13 @@ async function insertRouteOccupancy(client, routeId, route, options = {}) {
             item.eta_at,
             item.uav_id,
             item.mission_id,
-            'planned',
+            $3,
             'route_archive',
             grid_cell.geom
         FROM items item
         JOIN airspace_grid grid_cell ON grid_cell.geosot_id = item.geosot_id
         ON CONFLICT (route_id, sequence) DO NOTHING;
-    `, [routeId, JSON.stringify(records)]);
+    `, [routeId, JSON.stringify(records), OCCUPANCY_ARCHIVE_STATUS]);
 
     return result.rowCount;
 }
